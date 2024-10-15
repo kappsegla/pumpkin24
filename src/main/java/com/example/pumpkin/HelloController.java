@@ -10,16 +10,19 @@ public class HelloController {
 
     Model model = new Model();
 
+    public Label textLabel;
+
     public Button transferButton;
 
     public TextField textField;
 
-    public Label textLabel;
+    public TextField textFieldTarget;
 
     @FXML
     protected void transferButtonAction() {
         model.setUserText(textField.getText());
 
+        textFieldTarget.setText(model.getUserText());
         textLabel.setText(model.getUserText());
     }
 

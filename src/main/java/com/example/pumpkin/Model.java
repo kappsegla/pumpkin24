@@ -1,13 +1,20 @@
 package com.example.pumpkin;
 
-public class Model {
-    private String userText;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    public void setUserText(String text) {
-        this.userText = text;
-    }
+public class Model {
+    private StringProperty userText = new SimpleStringProperty();
 
     public String getUserText() {
-        return this.userText;
+        return userText.get();
+    }
+
+    public StringProperty userTextProperty() {
+        return userText;
+    }
+
+    public void setUserText(String userText) {
+        this.userText.set(userText);
     }
 }

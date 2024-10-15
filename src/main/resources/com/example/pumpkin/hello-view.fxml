@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pumpkin.HelloController">
-    <Label fx:id="textLabel" />
+    <Label fx:id="textLabel"/>
+    <TextField fx:id="textFieldTarget" />
     <TextField fx:id="textField" onKeyReleased="#textFieldChanged" />
     <Button fx:id="transferButton" onAction="#transferButtonAction" text="Transfer text" disable="true" />
    <padding>
