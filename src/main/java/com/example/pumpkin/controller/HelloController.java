@@ -5,6 +5,8 @@ import com.example.pumpkin.model.Model;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import static com.example.pumpkin.Pumpkin.*;
+
 public class HelloController {
 
 
@@ -20,14 +22,14 @@ public class HelloController {
 
 
     public void image1Clicked(MouseEvent mouseEvent) {
-        model.pumpkinSmashed(Pumpkin.FIRST);
+        model.pumpkinSmashed(FIRST);
     }
 
     public void image2Clicked(MouseEvent mouseEvent) {
-        model.pumpkinSmashed(Pumpkin.SECOND);
+        model.pumpkinSmashed(SECOND);
     }
 
     public void image3Clicked(MouseEvent mouseEvent) {
-        model.pumpkinSmashed(Pumpkin.THIRD);
+        model.pumpkinSmashed(THIRD);
     }
 }
