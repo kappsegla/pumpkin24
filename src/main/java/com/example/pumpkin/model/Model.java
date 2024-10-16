@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 
+import java.util.Random;
+
 public class Model {
 
     private int score = 0;
@@ -17,6 +19,8 @@ public class Model {
     ObjectProperty<Image> firstPumpkin;
     ObjectProperty<Image> secondPumpkin;
     ObjectProperty<Image> thirdPumpkin;
+
+    Random random = new Random();
 
     public Model() {
         noSmash = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin_blank.png").toExternalForm());
@@ -72,6 +76,16 @@ public class Model {
 
     public void setThirdPumpkin(Image thirdPumpkin) {
         this.thirdPumpkin.set(thirdPumpkin);
+    }
+
+    public void randomlyChangeOnePumpkin() {
+        int randomPumpkin = random.nextInt(4);
+        if (randomPumpkin == 1)
+            setFirstPumpkin(smash);
+        else if (randomPumpkin == 2)
+            setSecondPumpkin(smash);
+        else
+            setThirdPumpkin(smash);
     }
 
     public void pumpkinSmashed(Pumpkin pumpkin) {
