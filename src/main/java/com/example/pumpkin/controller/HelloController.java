@@ -8,6 +8,7 @@ public class HelloController {
 
 
     public ImageView image1;
+
     //This method will run after the controller object is created
     //and the fields are initialized.
     public void initialize() {
