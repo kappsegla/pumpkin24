@@ -1,6 +1,5 @@
 package com.example.pumpkin.controller;
 
-import com.example.pumpkin.Pumpkin;
 import com.example.pumpkin.model.Model;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
