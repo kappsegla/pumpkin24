@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.pumpkin.model.Direction.*;
+import static com.example.pumpkin.model.GameState.FINISHED;
 import static com.example.pumpkin.model.GameState.RUNNING;
 
 public class Model {
@@ -15,9 +16,9 @@ public class Model {
     GameState gameState = RUNNING;
 
     public Model() {
-        snake.add(new Point(300, 300));
-        snake.add(new Point(300, 320));
-        snake.add(new Point(300, 340));
+        snake.add(new Point(310, 310));
+        snake.add(new Point(310, 330));
+        snake.add(new Point(310, 350));
     }
 
     public List<Point> getSnake() {
@@ -29,6 +30,10 @@ public class Model {
     }
 
     public void update() {
+        if( gameState != RUNNING ) {
+            System.out.println(gameState);
+            return;
+        }
         Point next = calculateNextHeadPos();
         checkForCollisionWithWalls(next);
         checkForCollisionWithApple(next);
@@ -48,7 +53,10 @@ public class Model {
     }
 
     private void checkForCollisionWithWalls(Point next) {
-
+        if( next.x() < 10  || next.x() > BOARD_SIZE - 10 ||
+            next.y() < 10  || next.y() > BOARD_SIZE - 10) {
+            gameState = FINISHED;
+        }
     }
 
     private void checkForCollisionWithSelf(Point next) {
