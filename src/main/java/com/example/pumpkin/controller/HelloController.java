@@ -1,5 +1,6 @@
 package com.example.pumpkin.controller;
 
+import com.example.pumpkin.model.GameState;
 import com.example.pumpkin.model.Model;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 public class HelloController {
@@ -18,7 +20,6 @@ public class HelloController {
     //and the fields are initialized.
     public void initialize() {
         startRandomEvent();
-        canvas.getGraphicsContext2D().fillText("Press Space to start playing",200,300);
     }
 
     private void startRandomEvent(){
@@ -63,5 +64,11 @@ public class HelloController {
         });
         gc.setFill(Color.RED);
         gc.fillOval(model.getApple().x() - 10,model.getApple().y() - 10, 20, 20);
+
+        gc.setFill(Color.BLACK);
+        gc.setFont(new Font(20));
+
+        if(model.getGameState() == GameState.PAUSED)
+            gc.fillText("Press Space to start playing",200,300);
     }
 }
