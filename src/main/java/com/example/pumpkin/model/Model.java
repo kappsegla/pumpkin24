@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.pumpkin.model.Direction.*;
-import static com.example.pumpkin.model.GameState.*;
+import static com.example.pumpkin.model.GameState.RUNNING;
 
 public class Model {
     public static final int BOARD_SIZE = 600;
@@ -28,21 +28,23 @@ public class Model {
         return gameState;
     }
 
-    public void update(){
-        //Beräkna ny position för ormen
+    public void update() {
         Point next = calculateNextHeadPos();
-        //Kolla om ormen kolliderar med sig själv?
-        checkForCollisionWithSelf(next);
-        //Kolla om ormen kolliderar med vägg?
         checkForCollisionWithWalls(next);
-        //Kolla kolliderar med äpple
         checkForCollisionWithApple(next);
+        checkForCollisionWithSelf(next);
         //Spara ny position
         snake.addFirst(next);
     }
 
-    private void checkForCollisionWithApple(Point next) {
-
+    private Point calculateNextHeadPos() {
+        var currentHead = snake.getFirst();
+        return switch (currentDirection) {
+            case LEFT -> new Point(currentHead.x() - 20, currentHead.y());
+            case RIGHT -> new Point(currentHead.x() + 20, currentHead.y());
+            case UP -> new Point(currentHead.x(), currentHead.y() - 20);
+            case DOWN -> new Point(currentHead.x(), currentHead.y() + 20);
+        };
     }
 
     private void checkForCollisionWithWalls(Point next) {
@@ -53,8 +55,8 @@ public class Model {
 
     }
 
-    private Point calculateNextHeadPos() {
-        return null;
+    private void checkForCollisionWithApple(Point next) {
+
     }
 
     public void setUp() {
