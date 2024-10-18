@@ -1,12 +1,9 @@
 package com.example.pumpkin.model;
 
-import javafx.util.Pair;
-
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
-import static com.example.pumpkin.model.Direction.UP;
+import static com.example.pumpkin.model.Direction.*;
 
 public class Model {
     Point apple;
@@ -14,10 +11,10 @@ public class Model {
     List<Point> snake = new ArrayList<>();
     Direction currentDirection = UP;
 
-    public Model(){
-        snake.add(new Point(300,300));
-        snake.add(new Point(300,320));
-        snake.add(new Point(300,340));
+    public Model() {
+        snake.add(new Point(300, 300));
+        snake.add(new Point(300, 320));
+        snake.add(new Point(300, 340));
     }
 
     public List<Point> getSnake() {
@@ -25,21 +22,22 @@ public class Model {
     }
 
     public void setUp() {
-
-
+        if (currentDirection != DOWN)
+            currentDirection = UP;
     }
 
     public void setDown() {
-
-
+        if (currentDirection != UP)
+            currentDirection = DOWN;
     }
 
     public void setLeft() {
-
-
+        if (currentDirection != RIGHT)
+            currentDirection = LEFT;
     }
 
     public void setRight() {
-
+        if (currentDirection != LEFT)
+            currentDirection = RIGHT;
     }
 }
