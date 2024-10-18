@@ -7,6 +7,7 @@ import static com.example.pumpkin.model.Direction.*;
 import static com.example.pumpkin.model.GameState.*;
 
 public class Model {
+    public static final int BOARD_SIZE = 600;
     Point apple;
     //Point head; snake.getFirst()
     List<Point> snake = new ArrayList<>();
@@ -25,6 +26,35 @@ public class Model {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void update(){
+        //Beräkna ny position för ormen
+        Point next = calculateNextHeadPos();
+        //Kolla om ormen kolliderar med sig själv?
+        checkForCollisionWithSelf(next);
+        //Kolla om ormen kolliderar med vägg?
+        checkForCollisionWithWalls(next);
+        //Kolla kolliderar med äpple
+        checkForCollisionWithApple(next);
+        //Spara ny position
+        snake.addFirst(next);
+    }
+
+    private void checkForCollisionWithApple(Point next) {
+
+    }
+
+    private void checkForCollisionWithWalls(Point next) {
+
+    }
+
+    private void checkForCollisionWithSelf(Point next) {
+
+    }
+
+    private Point calculateNextHeadPos() {
+        return null;
     }
 
     public void setUp() {

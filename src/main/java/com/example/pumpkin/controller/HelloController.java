@@ -33,6 +33,7 @@ public class HelloController {
     }
 
     public void canvasClicked(MouseEvent mouseEvent) {
+        model.update();
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
 
@@ -45,7 +46,7 @@ public class HelloController {
 
         gc.setFill(Color.RED);
         gc.fillOval(100 - 10, 100 - 10, 20, 20);
-                
+
 
     }
 }
