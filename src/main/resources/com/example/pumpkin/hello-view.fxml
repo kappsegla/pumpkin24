@@ -5,5 +5,5 @@
 <Pane fx:id="pane" xmlns="http://javafx.com/javafx/23"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.pumpkin.controller.HelloController">
-    <Canvas onMouseClicked="#canvasClicked" fx:id="canvas" width="600" height="600"/>
+    <Canvas fx:id="canvas" width="600" height="600"/>
 </Pane>

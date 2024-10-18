@@ -32,21 +32,17 @@ public class HelloController {
         return model;
     }
 
-    public void canvasClicked(MouseEvent mouseEvent) {
+    public void gameUpdate() {
         model.update();
-        double x = mouseEvent.getX();
-        double y = mouseEvent.getY();
 
         var gc = canvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         //This information will come from our model!
         gc.setFill(Color.GREEN);
         model.getSnake().forEach(point -> {
-            gc.fillRect(point.x() - 10, point.y() - 10, 20, 20);
+            gc.fillRect(point.x() - 10,point.y() - 10, 20, 20);
         });
-
         gc.setFill(Color.RED);
-        gc.fillOval(100 - 10, 100 - 10, 20, 20);
-
-
+        gc.fillOval(model.getApple().x() - 10,model.getApple().y() - 10, 20, 20);
     }
 }
