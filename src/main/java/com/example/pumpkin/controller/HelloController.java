@@ -1,10 +1,14 @@
 package com.example.pumpkin.controller;
 
 import com.example.pumpkin.model.Model;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class HelloController {
 
@@ -16,6 +20,19 @@ public class HelloController {
 
     }
 
+    private void startRandomEvent(){
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(300),
+                        (ActionEvent event) -> {
+                            gameUpdate();
+                            startRandomEvent();
+                        }
+                )
+        );
+        timeline.play();
+    }
+
     public void keyPressed(KeyEvent keyEvent) {
         //Call methods on model to update snake direction
         switch (keyEvent.getCode()) {
@@ -23,6 +40,7 @@ public class HelloController {
             case DOWN, S -> model.setDown();
             case LEFT, A -> model.setLeft();
             case RIGHT, D -> model.setRight();
+            case SPACE -> startRandomEvent();
         }
     }
 
