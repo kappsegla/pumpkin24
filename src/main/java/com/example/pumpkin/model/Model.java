@@ -2,6 +2,7 @@ package com.example.pumpkin.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.example.pumpkin.model.Direction.*;
 import static com.example.pumpkin.model.GameState.FINISHED;
@@ -14,11 +15,14 @@ public class Model {
     List<Point> snake = new ArrayList<>();
     Direction currentDirection = UP;
     GameState gameState = RUNNING;
+    Random random = new Random();
 
     public Model() {
         snake.add(new Point(310, 310));
         snake.add(new Point(310, 330));
         snake.add(new Point(310, 350));
+
+        apple = randomApple(snake.getFirst());
     }
 
     public List<Point> getSnake() {
@@ -30,7 +34,7 @@ public class Model {
     }
 
     public void update() {
-        if( gameState != RUNNING ) {
+        if (gameState != RUNNING) {
             System.out.println(gameState);
             return;
         }
@@ -53,18 +57,33 @@ public class Model {
     }
 
     private void checkForCollisionWithWalls(Point next) {
-        if( next.x() < 10  || next.x() > BOARD_SIZE - 10 ||
-            next.y() < 10  || next.y() > BOARD_SIZE - 10) {
+        if (next.x() < 10 || next.x() > BOARD_SIZE - 10 ||
+            next.y() < 10 || next.y() > BOARD_SIZE - 10) {
             gameState = FINISHED;
         }
     }
 
     private void checkForCollisionWithSelf(Point next) {
-
+        if (snake.contains(next))  //Compare objects using equals... what happens with double values?????
+            gameState = FINISHED;
     }
 
     private void checkForCollisionWithApple(Point next) {
+        if (next.equals(apple))
+            apple = randomApple(next);
+        else
+            snake.removeLast();
+    }
 
+    private Point randomApple(Point next) {
+        Point newApple;
+        do {
+            int xPos = random.nextInt(BOARD_SIZE / 20) * 20 + 10;
+            int yPos = random.nextInt(BOARD_SIZE / 20) * 20 + 10;
+            //10 30 50 70 90 ... 590
+            newApple = new Point(xPos, yPos);
+        } while (newApple.equals(next) || snake.contains(newApple));
+        return newApple;
     }
 
     public void setUp() {
@@ -85,5 +104,9 @@ public class Model {
     public void setRight() {
         if (currentDirection != LEFT)
             currentDirection = RIGHT;
+    }
+
+    public Point getApple() {
+        return apple;
     }
 }
