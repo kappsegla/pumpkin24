@@ -17,8 +17,8 @@ public class HelloController {
     //This method will run after the controller object is created
     //and the fields are initialized.
     public void initialize() {
+        startRandomEvent();
         canvas.getGraphicsContext2D().fillText("Press Space to start playing",200,300);
-
     }
 
     private void startRandomEvent(){
@@ -41,7 +41,7 @@ public class HelloController {
             case DOWN, S -> model.setDown();
             case LEFT, A -> model.setLeft();
             case RIGHT, D -> model.setRight();
-            case SPACE -> startRandomEvent();
+            case SPACE -> model.pauseUnpause();
         }
     }
 

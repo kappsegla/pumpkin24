@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.example.pumpkin.model.Direction.*;
-import static com.example.pumpkin.model.GameState.FINISHED;
-import static com.example.pumpkin.model.GameState.RUNNING;
+import static com.example.pumpkin.model.GameState.*;
 
 public class Model {
     public static final int BOARD_SIZE = 600;
@@ -14,7 +13,7 @@ public class Model {
     //Point head; snake.getFirst()
     List<Point> snake = new ArrayList<>();
     Direction currentDirection = UP;
-    GameState gameState = RUNNING;
+    GameState gameState = PAUSED;
     Random random = new Random();
 
     public Model() {
@@ -33,9 +32,15 @@ public class Model {
         return gameState;
     }
 
+    public void pauseUnpause() {
+        if( gameState == RUNNING)
+            gameState = PAUSED;
+        else if (gameState == PAUSED)
+            gameState = RUNNING;
+    }
+
     public void update() {
         if (gameState != RUNNING) {
-            System.out.println(gameState);
             return;
         }
         Point next = calculateNextHeadPos();
