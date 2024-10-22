@@ -69,4 +69,15 @@ class ModelTest {
                 .hasSize(3);
     }
 
+    @Test
+    @DisplayName("Changing direction multiple times between call to update gets snake to eat itself")
+    void changingDirectionMultipleTimesBetweenCallToUpdateGetsSnakeToEatItself() {
+        model.setLeft();
+        model.setDown();
+
+        assertThat(model.getCurrentDirection()).isEqualTo(Direction.LEFT);
+    }
+
+
+
 }

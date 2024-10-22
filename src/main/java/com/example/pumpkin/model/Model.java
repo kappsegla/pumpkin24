@@ -24,6 +24,10 @@ public class Model {
         apple = randomApple(snake.getFirst());
     }
 
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
     public List<Point> getSnake() {
         return snake;
     }
