@@ -1,17 +1,19 @@
 package com.example.pumpkin.model;
 
-import org.junit.jupiter.api.*;
+import org.assertj.core.data.Index;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ModelTest {
 
     Model model = new Model();
 
     @Test
-    void whenCreatingModelThenGameStateIsPaused(){
+    void whenCreatingModelThenGameStateIsPaused() {
         assertEquals(GameState.PAUSED, model.getGameState(),
                 "Initial game state should be paused.");
     }
@@ -45,8 +47,10 @@ class ModelTest {
         model.update();
 
         var result = model.getSnake();
-        assertEquals(3, result.size());
-        assertEquals(new Point(310, 290), result.getFirst());
+
+        assertAll(
+                () -> assertEquals(3, result.size()),
+                () -> assertEquals(new Point(310, 290), result.getFirst()));
     }
 
     @Test
@@ -57,8 +61,12 @@ class ModelTest {
         model.update();
 
         var result = model.getSnake();
-        assertEquals(3, result.size());
-        assertEquals(new Point(290, 310), result.getFirst());
+
+        assertThat(result)
+                .as(() -> "Head should be at " + new Point(290, 310))
+                .contains(new Point(290, 310), Index.atIndex(0))
+                .as("Size should be 3")
+                .hasSize(3);
     }
 
 }

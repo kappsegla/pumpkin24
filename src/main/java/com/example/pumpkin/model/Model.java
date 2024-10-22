@@ -43,6 +43,7 @@ public class Model {
         if (gameState != RUNNING) {
             return;
         }
+
         Point next = calculateNextHeadPos();
         checkForCollisionWithWalls(next);
         checkForCollisionWithApple(next);
