@@ -10,11 +10,11 @@
 
     <Label text="${controller.model.scoring}"/>
     <HBox alignment="CENTER" spacing="20.0">
-        <ImageView image="${controller.model.firstPumpkin}" onMouseClicked="#image1Clicked">
+        <ImageView image="${controller.model.images[0]}" onMouseClicked="#image1Clicked">
         </ImageView>
-        <ImageView image="${controller.model.secondPumpkin}" onMouseClicked="#image2Clicked">
+        <ImageView image="${controller.model.images[1]}" onMouseClicked="#image2Clicked">
         </ImageView>
-        <ImageView image="${controller.model.thirdPumpkin}" onMouseClicked="#image3Clicked">
+        <ImageView image="${controller.model.images[2]}" onMouseClicked="#image3Clicked">
         </ImageView>
     </HBox>
 </VBox>
