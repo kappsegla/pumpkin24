@@ -6,15 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Model {
-    private StringProperty userText = new SimpleStringProperty();
-    private ObservableList<String> messages = FXCollections.observableArrayList();
+    private final StringProperty userText = new SimpleStringProperty("");
+    private final ObservableList<String> messages = FXCollections.observableArrayList();
 
     public ObservableList<String> getMessages() {
         return messages;
-    }
-
-    public void setMessages(ObservableList<String> messages) {
-        this.messages = messages;
     }
 
     public String getUserText() {
@@ -26,8 +22,7 @@ public class Model {
     }
 
     public void setUserText(String userText) {
-        if (!userText.isEmpty())
-            this.userText.set(userText);
+        this.userText.set(userText);
     }
 
     public void sendMessage() {

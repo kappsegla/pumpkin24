@@ -16,6 +16,7 @@ public class HelloController {
     //and the fields are initialized.
 
     public void initialize() {
+        textField.textProperty().bindBidirectional(model.userTextProperty());
     }
 
     public Model getModel() {
@@ -24,6 +25,5 @@ public class HelloController {
 
     public void sendAction(ActionEvent actionEvent) {
         model.sendMessage();
-
     }
 }
