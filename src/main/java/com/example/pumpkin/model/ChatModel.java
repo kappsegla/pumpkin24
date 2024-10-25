@@ -12,7 +12,7 @@ public class ChatModel {
     private final Client client = new Client();
 
     public ChatModel() {
-        client.connect();
+        client.connect(this::receiveMessage);
     }
 
     public ObservableList<String> getMessages() {

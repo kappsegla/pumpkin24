@@ -1,10 +1,13 @@
 package com.example.pumpkin.network;
 
+import com.example.pumpkin.model.ChatModel;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.function.Consumer;
 
 public class Client {
     String host = "fungover.org";
@@ -13,16 +16,29 @@ public class Client {
     BufferedReader in;
     PrintWriter out;
     boolean connected = false;
+    Consumer<String> callback;
 
-    public void connect(){
+    public void connect(Consumer<String> callback) {
         try {
             socket = new Socket(host, port);
             out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             connected = true;
+            this.callback = callback;
+            Thread.ofVirtual().start(()->listenForMessages());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void listenForMessages() {
+        try {
+            String message;
+            while ((message = in.readLine()) != null) {
+                callback.accept(message);
+            }
+        }catch (IOException e) { }
     }
 
     public void disconnect(){
