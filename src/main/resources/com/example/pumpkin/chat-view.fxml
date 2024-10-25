@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pumpkin.controller.ChatController">
-    <ListView items="${controller.model.messages}" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+    <ListView fx:id="listView" items="${controller.model.messages}" prefWidth="200.0" VBox.vgrow="ALWAYS" />
     <TextField fx:id="textField" />
-    <Button fx:id="sendButton" disable="${textField.text.empty}" onAction="#sendAction" text="Skicka" />
+    <Button defaultButton="true" fx:id="sendButton" disable="${textField.text.empty}" onAction="#sendAction" text="Skicka" />
    <padding>
       <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
    </padding>

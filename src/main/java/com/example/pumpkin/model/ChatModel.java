@@ -39,6 +39,10 @@ public class ChatModel {
 
     public void receiveMessage(String message) {
         //This method will be executed by the virtual thread in Client that calls accept on Consumer
-        Platform.runLater(() -> messages.add(message));
+        Platform.runLater(() -> {
+            messages.add(message);
+            if (messages.size() > 100)
+                messages.removeFirst();
+        });
     }
 }
