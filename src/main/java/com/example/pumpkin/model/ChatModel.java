@@ -11,6 +11,10 @@ public class ChatModel {
     private final ObservableList<String> messages = FXCollections.observableArrayList();
     private final Client client = new Client();
 
+    public ChatModel() {
+        client.connect();
+    }
+
     public ObservableList<String> getMessages() {
         return messages;
     }

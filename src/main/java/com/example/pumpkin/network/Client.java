@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
-    String host = "localhost";
+    String host = "fungover.org";
     int port = 8080;
     Socket socket;
     BufferedReader in;

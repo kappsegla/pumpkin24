@@ -6,8 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Server {
+
+    static List<PrintWriter> writers = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(8080)) {
@@ -21,17 +26,28 @@ public class Server {
     }
 
     private static void handleClient(Socket socket) {
+        PrintWriter writer = null;
         try (Socket clientSocket = socket) {
             System.out.println("[" + Thread.currentThread().threadId() +  "] Client connected...");
-            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
+            writer = new PrintWriter(clientSocket.getOutputStream());
+            writers.add(writer);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             while(true) {
+                 String message = in.readLine();
+                 System.out.println(message);
+                 sendMessageToAllConnected(message);
+             }
+        } catch (IOException e) {
+            System.out.println("Client disconnected.. or something else happened.");
+            writers.remove(writer);
+        }
+    }
 
-            //Echo
-            String message = in.readLine();
+    private static void sendMessageToAllConnected(String message) {
+        //Todo: Handle errors from writers
+        for (PrintWriter writer : writers) {
             writer.println(message);
             writer.flush();
-        } catch (IOException e) {
-            System.out.println("Exception in client connection.");
         }
     }
 }

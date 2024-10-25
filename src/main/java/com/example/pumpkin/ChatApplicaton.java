@@ -15,6 +15,13 @@ public class ChatApplicaton extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            System.out.println("Closing application")));
+
+        stage.setOnCloseRequest(event -> {
+            System.out.println("Stage is closing");
+        });
     }
 
     public static void main(String[] args) {
