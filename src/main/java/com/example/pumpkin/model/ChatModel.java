@@ -1,6 +1,7 @@
 package com.example.pumpkin.model;
 
 import com.example.pumpkin.network.Client;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -36,8 +37,8 @@ public class ChatModel {
         userText.set("");
     }
 
-    //Todo: Get someone to call this method when a message is received
     public void receiveMessage(String message) {
-        messages.add(message);
+        //This method will be executed by the virtual thread in Client that calls accept on Consumer
+        Platform.runLater(() -> messages.add(message));
     }
 }
