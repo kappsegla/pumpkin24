@@ -32,9 +32,12 @@ public class ChatModel {
     }
 
     public void sendMessage() {
-        //messages.add(userText.get());
-        //Todo: Send message to server
         client.sendMessage(userText.get());
         userText.set("");
+    }
+
+    //Todo: Get someone to call this method when a message is received
+    public void receiveMessage(String message) {
+        messages.add(message);
     }
 }
