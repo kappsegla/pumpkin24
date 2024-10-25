@@ -9,4 +9,6 @@ module com.example.pumpkin {
     opens com.example.pumpkin.model to javafx.fxml;
     exports com.example.pumpkin.controller;
     opens com.example.pumpkin.controller to javafx.fxml;
+    exports com.example.pumpkin.network;
+    opens com.example.pumpkin.network to javafx.fxml;
 }
