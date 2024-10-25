@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Server {
 
-    static List<PrintWriter> writers = Collections.synchronizedList(new ArrayList<>());
+    static final List<PrintWriter> writers = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(8080)) {
@@ -44,10 +44,11 @@ public class Server {
     }
 
     private static void sendMessageToAllConnected(String message) {
-        //Todo: Handle errors from writers
-        for (PrintWriter writer : writers) {
-            writer.println(message);
-            writer.flush();
+        synchronized (writers) {
+            for (PrintWriter writer : writers) {
+                writer.println(message);
+                writer.flush();
+            }
         }
     }
 }
