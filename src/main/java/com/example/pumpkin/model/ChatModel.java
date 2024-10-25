@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Model {
+public class ChatModel {
     private final StringProperty userText = new SimpleStringProperty("");
     private final ObservableList<String> messages = FXCollections.observableArrayList();
 
