@@ -14,7 +14,6 @@ public class ChatController {
 
     //This method will run after the controller object is created
     //and the fields are initialized.
-
     public void initialize() {
         textField.textProperty().bindBidirectional(model.userTextProperty());
     }

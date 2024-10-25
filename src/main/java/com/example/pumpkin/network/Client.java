@@ -7,30 +7,35 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
+    String host = "localhost";
+    int port = 8080;
+    Socket socket;
+    BufferedReader in;
+    PrintWriter out;
+    boolean connected = false;
 
-    public static void main(String[] args) {
-        String host = "localhost";
-        int port = 8080;
-
-        try(Socket socket = new Socket(host, port)) {
-            String request = "Hello World!";
-            //Alt:1 Convert string to byte[]
-            //socket.getOutputStream().write(request.getBytes());
-            //Alt:2 Use a PrintWriter instead
-            PrintWriter writer = new PrintWriter(socket.getOutputStream());
-            writer.println(request);
-            writer.flush();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            in.lines().forEach(System.out::println);
-//            String line;
-//            while( (line = in.readLine()) != null) {
-//                System.out.println(line);
-//            }
+    public void connect(){
+        try {
+            socket = new Socket(host, port);
+            out = new PrintWriter(socket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            connected = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void disconnect(){
+        try {
+            socket.close();
+            connected = false;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void sendMessage(String message) {
+        out.println(message);
+        out.flush();
     }
 }

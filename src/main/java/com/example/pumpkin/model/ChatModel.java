@@ -1,5 +1,6 @@
 package com.example.pumpkin.model;
 
+import com.example.pumpkin.network.Client;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 public class ChatModel {
     private final StringProperty userText = new SimpleStringProperty("");
     private final ObservableList<String> messages = FXCollections.observableArrayList();
+    private final Client client = new Client();
 
     public ObservableList<String> getMessages() {
         return messages;
@@ -26,7 +28,9 @@ public class ChatModel {
     }
 
     public void sendMessage() {
-        messages.add(userText.get());
+        //messages.add(userText.get());
+        //Todo: Send message to server
+        client.sendMessage(userText.get());
         userText.set("");
     }
 }
