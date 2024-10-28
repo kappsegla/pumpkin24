@@ -15,6 +15,7 @@ public class Model {
     Direction currentDirection = UP;
     GameState gameState = PAUSED;
     Random random = new Random();
+    boolean renderedSinceLastDirectionChange = true;
 
     public Model() {
         snake.add(new Point(310, 310));
@@ -26,6 +27,10 @@ public class Model {
 
     public Direction getCurrentDirection() {
         return currentDirection;
+    }
+
+    public void setRenderedSinceLastDirectionChange() {
+        this.renderedSinceLastDirectionChange = true;
     }
 
     public List<Point> getSnake() {
@@ -97,23 +102,27 @@ public class Model {
     }
 
     public void setUp() {
-        if (currentDirection != DOWN)
+        if (currentDirection != DOWN && renderedSinceLastDirectionChange)
             currentDirection = UP;
+        renderedSinceLastDirectionChange = false;
     }
 
     public void setDown() {
-        if (currentDirection != UP)
+        if (currentDirection != UP && renderedSinceLastDirectionChange)
             currentDirection = DOWN;
+        renderedSinceLastDirectionChange = false;
     }
 
     public void setLeft() {
-        if (currentDirection != RIGHT)
+        if (currentDirection != RIGHT && renderedSinceLastDirectionChange)
             currentDirection = LEFT;
+        renderedSinceLastDirectionChange = false;
     }
 
     public void setRight() {
-        if (currentDirection != LEFT)
+        if (currentDirection != LEFT && renderedSinceLastDirectionChange)
             currentDirection = RIGHT;
+        renderedSinceLastDirectionChange = false;
     }
 
     public Point getApple() {

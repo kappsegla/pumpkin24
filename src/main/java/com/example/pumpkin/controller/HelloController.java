@@ -60,6 +60,7 @@ public class HelloController {
         renderSnake(gc);
         renderApple(gc);
         renderGameState(gc);
+        model.setRenderedSinceLastDirectionChange();
     }
 
     private void renderGameState(GraphicsContext gc) {
