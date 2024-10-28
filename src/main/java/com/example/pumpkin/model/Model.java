@@ -1,7 +1,10 @@
 package com.example.pumpkin.model;
 
 import com.example.pumpkin.Pumpkin;
-import javafx.beans.property.*;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -14,6 +17,9 @@ public class Model {
     private StringProperty scoring = new SimpleStringProperty("0 poäng");
     Image noSmash;
     Image smash;
+    Image smash1;
+    Image smash2;
+    Image doNotSmash;
 
 //    ObjectProperty<Image> firstPumpkin;
 //    ObjectProperty<Image> secondPumpkin;
@@ -26,6 +32,9 @@ public class Model {
     public Model() {
         noSmash = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin_blank.png").toExternalForm());
         smash = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin1.png").toExternalForm());
+        smash1 = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin2.png").toExternalForm());
+        smash2 = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin3.png").toExternalForm());
+        doNotSmash = new Image(getClass().getResource("/com/example/pumpkin/images/pumpkin4.png").toExternalForm());
         images.add(noSmash);
         images.add(noSmash);
         images.add(noSmash);
@@ -70,27 +79,48 @@ public class Model {
     public void randomlyChangeOnePumpkin() {
         int randomPumpkin = random.nextInt(4);
         if (randomPumpkin == 1) {
-            images.set(0, smash);
+            selectImage(0);
         } else if (randomPumpkin == 2) {
-            images.set(1, smash);
+            selectImage(1);
         } else {
-            images.set(2, smash);
+            selectImage(2);
         }
+    }
+
+    private void selectImage(int i) {
+        double probability = random.nextDouble();
+        if (probability < 0.2)
+            images.set(i, smash);
+        else if (probability < 0.4)
+            images.set(i, smash1);
+        else if (probability < 0.6)
+            images.set(i, smash2);
+        else if (probability < 0.9)
+            images.set(i, noSmash);
+        else
+            images.set(i, doNotSmash);
     }
 
     public void pumpkinSmashed(Pumpkin pumpkin) {
         //Check if we can smack this pumpkin
         //Increase score
-        if (pumpkin == Pumpkin.FIRST && getFirstPumpkin() == smash) {
+        if (pumpkin == Pumpkin.FIRST && getFirstPumpkin() != noSmash) {
+            if (getFirstPumpkin() == doNotSmash) score--;
+            else
+                score++;
             images.set(0, noSmash);
-            score++;
-        } else if (pumpkin == Pumpkin.SECOND && getSecondPumpkin() == smash) {
+        } else if (pumpkin == Pumpkin.SECOND && getSecondPumpkin() != noSmash) {
+            if (getSecondPumpkin() == doNotSmash) score--;
+            else
+                score++;
             images.set(1, noSmash);
-            score++;
-        } else if (pumpkin == Pumpkin.THIRD && getThirdPumpkin() == smash) {
+        } else if (pumpkin == Pumpkin.THIRD && getThirdPumpkin() != noSmash) {
+            if (getThirdPumpkin() == doNotSmash) score--;
+            else
+                score++;
             images.set(2, noSmash);
-            score++;
         }
+
         setScoring(score + " poäng");
     }
 }
