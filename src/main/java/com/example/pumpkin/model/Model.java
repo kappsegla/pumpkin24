@@ -15,7 +15,7 @@ public class Model {
     Direction currentDirection = UP;
     GameState gameState = PAUSED;
     Random random = new Random();
-    boolean renderedSinceLastDirectionChange = true;
+    boolean updatedSinceLastDirectionChange = true;
 
     public Model() {
         snake.add(new Point(310, 310));
@@ -29,8 +29,8 @@ public class Model {
         return currentDirection;
     }
 
-    public void setRenderedSinceLastDirectionChange() {
-        this.renderedSinceLastDirectionChange = true;
+    public void updatedSinceLastDirectionChange() {
+        this.updatedSinceLastDirectionChange = true;
     }
 
     public List<Point> getSnake() {
@@ -42,7 +42,7 @@ public class Model {
     }
 
     public void pauseUnpause() {
-        if( gameState == RUNNING)
+        if (gameState == RUNNING)
             gameState = PAUSED;
         else if (gameState == PAUSED)
             gameState = RUNNING;
@@ -59,6 +59,7 @@ public class Model {
         checkForCollisionWithSelf(next);
         //Spara ny position
         snake.addFirst(next);
+        updatedSinceLastDirectionChange();
     }
 
     private Point calculateNextHeadPos() {
@@ -102,27 +103,30 @@ public class Model {
     }
 
     public void setUp() {
-        if (currentDirection != DOWN && renderedSinceLastDirectionChange)
-            currentDirection = UP;
-        renderedSinceLastDirectionChange = false;
+        if (currentDirection != DOWN)
+            setNewDirection(UP);
     }
 
     public void setDown() {
-        if (currentDirection != UP && renderedSinceLastDirectionChange)
-            currentDirection = DOWN;
-        renderedSinceLastDirectionChange = false;
+        if (currentDirection != UP)
+            setNewDirection(DOWN);
     }
 
     public void setLeft() {
-        if (currentDirection != RIGHT && renderedSinceLastDirectionChange)
-            currentDirection = LEFT;
-        renderedSinceLastDirectionChange = false;
+        if (currentDirection != RIGHT)
+            setNewDirection(LEFT);
     }
 
     public void setRight() {
-        if (currentDirection != LEFT && renderedSinceLastDirectionChange)
-            currentDirection = RIGHT;
-        renderedSinceLastDirectionChange = false;
+        if (currentDirection != LEFT)
+            setNewDirection(RIGHT);
+    }
+
+    private void setNewDirection(Direction direction) {
+        if( updatedSinceLastDirectionChange) {
+            currentDirection = direction;
+            updatedSinceLastDirectionChange = false;
+        }
     }
 
     public Point getApple() {

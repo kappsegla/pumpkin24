@@ -60,7 +60,6 @@ public class HelloController {
         renderSnake(gc);
         renderApple(gc);
         renderGameState(gc);
-        model.setRenderedSinceLastDirectionChange();
     }
 
     private void renderGameState(GraphicsContext gc) {
@@ -76,6 +75,9 @@ public class HelloController {
         model.getSnake().forEach(point -> {
             gc.fillRect(point.x() - 10, point.y() - 10, 20, 20);
         });
+        gc.setFill(Color.ORANGE);
+        var head = model.getSnake().getFirst();
+        gc.fillRect(head.x() - 10, head.y() - 10, 20, 20);
     }
 
     private void renderApple(GraphicsContext gc) {
