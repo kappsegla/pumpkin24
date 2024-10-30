@@ -9,7 +9,7 @@ import static com.example.pumpkin.model.GameState.*;
 
 public class Model {
     public static final int BOARD_SIZE = 600;
-    Point apple;
+    Apple apple;
     //Point head; snake.getFirst()
     List<Point> snake = new ArrayList<>();
     Direction currentDirection = UP;
@@ -85,13 +85,13 @@ public class Model {
     }
 
     private void checkForCollisionWithApple(Point next) {
-        if (next.equals(apple))
+        if (next.equals(apple.position()))
             apple = randomApple(next);
         else
             snake.removeLast();
     }
 
-    private Point randomApple(Point next) {
+    private Apple randomApple(Point next) {
         Point newApple;
         do {
             int xPos = random.nextInt(BOARD_SIZE / 20) * 20 + 10;
@@ -99,7 +99,7 @@ public class Model {
             //10 30 50 70 90 ... 590
             newApple = new Point(xPos, yPos);
         } while (newApple.equals(next) || snake.contains(newApple));
-        return newApple;
+        return new Apple(newApple, false);
     }
 
     public void setUp() {
@@ -129,7 +129,10 @@ public class Model {
         }
     }
 
-    public Point getApple() {
-        return apple;
+    public Point getApplePosition() {
+        return apple.position();
+    }
+    public boolean isApplePoisonous() {
+        return apple.poisoned();
     }
 }

@@ -82,6 +82,8 @@ public class HelloController {
 
     private void renderApple(GraphicsContext gc) {
         gc.setFill(Color.RED);
-        gc.fillOval(model.getApple().x() - 10, model.getApple().y() - 10, 20, 20);
+        if (model.isApplePoisonous())
+            gc.setFill(Color.PURPLE);
+        gc.fillOval(model.getApplePosition().x() - 10, model.getApplePosition().y() - 10, 20, 20);
     }
 }
