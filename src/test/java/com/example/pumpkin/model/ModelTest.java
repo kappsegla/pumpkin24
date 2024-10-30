@@ -105,4 +105,19 @@ class ModelTest {
                 .as("Size should be 4")
                 .hasSize(4);
     }
+
+    @Test
+    @DisplayName("Poisonous apple becomes normal after 20 updates")
+    void poisonousAppleBecomesNormalAfter20Updates() {
+        model.pauseUnpause();
+        model.apple = new Apple(new Point(310, 290), true);
+        for (int i = 0; i < 10; i++) {
+            model.update();
+        }
+        model.setLeft();
+        for (int i = 0; i < 10; i++) {
+            model.update();
+        }
+        assertThat(model.isApplePoisonous()).isFalse();
+    }
 }

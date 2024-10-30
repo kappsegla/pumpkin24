@@ -17,6 +17,7 @@ public class Model {
     Random random = new Random();
     boolean updatedSinceLastDirectionChange = true;
     private boolean poisoned;
+    int updateCounter = 0;
     DirectionState directionState;
 
     public Model() {
@@ -62,6 +63,11 @@ public class Model {
         checkForCollisionWithSelf(next);
         //Spara ny position
         snake.addFirst(next);
+        if (isApplePoisonous())
+            updateCounter++;
+        if (updateCounter == 20)
+            apple = new Apple(apple.position(), false);
+
         updatedSinceLastDirectionChange();
     }
 
@@ -89,13 +95,13 @@ public class Model {
 
     private void checkForCollisionWithApple(Point next) {
         if (next.equals(apple.position())) {
-            if( apple.poisoned()) {
+            if (apple.poisoned()) {
+                updateCounter = 0;
                 poisoned = true;
                 directionState = new PoisonedDirectionState(this);
             }
             apple = randomApple(next);
-        }
-        else
+        } else
             snake.removeLast();
     }
 
@@ -112,7 +118,7 @@ public class Model {
 
     public void setUp() {
 
-            directionState.setUp();
+        directionState.setUp();
     }
 
     public void setDown() {
@@ -131,7 +137,7 @@ public class Model {
     }
 
     public void setNewDirection(Direction direction) {
-        if( updatedSinceLastDirectionChange) {
+        if (updatedSinceLastDirectionChange) {
             currentDirection = direction;
             updatedSinceLastDirectionChange = false;
         }
@@ -140,6 +146,7 @@ public class Model {
     public Point getApplePosition() {
         return apple.position();
     }
+
     public boolean isApplePoisonous() {
         return apple.poisoned();
     }
