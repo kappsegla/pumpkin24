@@ -72,12 +72,37 @@ class ModelTest {
     @Test
     @DisplayName("Changing direction multiple times between call to update gets snake to eat itself")
     void changingDirectionMultipleTimesBetweenCallToUpdateGetsSnakeToEatItself() {
+        model.pauseUnpause();
         model.setLeft();
         model.setDown();
 
         assertThat(model.getCurrentDirection()).isEqualTo(Direction.LEFT);
     }
 
+    @Test
+    @DisplayName("AfterEatingPoisonousAppleThenSnakeBecomesPoisoned")
+    void afterEatingPoisonousAppleThenSnakeBecomesPoisoned() {
+        model.pauseUnpause();
+        model.apple = new Apple(new Point(310, 290), true);
+        model.update();
+        assertThat(model.isPoisoned()).isTrue();
+    }
 
+    @Test
+    @DisplayName("AfterEatingPoisonousAppleThenControllsBecomesInverted")
+    void afterEatingPoisonousAppleThenControllsBecomesInverted() {
+        Point expectedHeadPosition = new Point(330, 290);
 
+        model.pauseUnpause();
+        model.apple = new Apple(new Point(310, 290), true);
+        model.update();
+        model.setLeft();
+        model.update();
+
+        assertThat(model.getSnake())
+                .as(() -> "Head should be at " + expectedHeadPosition)
+                .contains(expectedHeadPosition, Index.atIndex(0))
+                .as("Size should be 4")
+                .hasSize(4);
+    }
 }

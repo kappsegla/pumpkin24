@@ -16,6 +16,8 @@ public class Model {
     GameState gameState = PAUSED;
     Random random = new Random();
     boolean updatedSinceLastDirectionChange = true;
+    private boolean poisoned;
+    DirectionState directionState;
 
     public Model() {
         snake.add(new Point(310, 310));
@@ -23,6 +25,7 @@ public class Model {
         snake.add(new Point(310, 350));
 
         apple = randomApple(snake.getFirst());
+        directionState = new NormalDirectionState(this);
     }
 
     public Direction getCurrentDirection() {
@@ -85,8 +88,13 @@ public class Model {
     }
 
     private void checkForCollisionWithApple(Point next) {
-        if (next.equals(apple.position()))
+        if (next.equals(apple.position())) {
+            if( apple.poisoned()) {
+                poisoned = true;
+                directionState = new PoisonedDirectionState(this);
+            }
             apple = randomApple(next);
+        }
         else
             snake.removeLast();
     }
@@ -99,30 +107,30 @@ public class Model {
             //10 30 50 70 90 ... 590
             newApple = new Point(xPos, yPos);
         } while (newApple.equals(next) || snake.contains(newApple));
-        return new Apple(newApple, false);
+        return new Apple(newApple, true);
     }
 
     public void setUp() {
-        if (currentDirection != DOWN)
-            setNewDirection(UP);
+
+            directionState.setUp();
     }
 
     public void setDown() {
         if (currentDirection != UP)
-            setNewDirection(DOWN);
+            directionState.setDown();
     }
 
     public void setLeft() {
         if (currentDirection != RIGHT)
-            setNewDirection(LEFT);
+            directionState.setLeft();
     }
 
     public void setRight() {
         if (currentDirection != LEFT)
-            setNewDirection(RIGHT);
+            directionState.setRight();
     }
 
-    private void setNewDirection(Direction direction) {
+    public void setNewDirection(Direction direction) {
         if( updatedSinceLastDirectionChange) {
             currentDirection = direction;
             updatedSinceLastDirectionChange = false;
@@ -134,5 +142,9 @@ public class Model {
     }
     public boolean isApplePoisonous() {
         return apple.poisoned();
+    }
+
+    public boolean isPoisoned() {
+        return poisoned;
     }
 }
